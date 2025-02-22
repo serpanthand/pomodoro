@@ -1,0 +1,332 @@
+/* General Styles */
+body {
+  margin: 0;
+  font-family: 'Arial', sans-serif;
+  background: linear-gradient(135deg, #6a11cb, #2575fc);
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.container {
+  display: flex;
+  width: 90%;
+  max-width: 1200px;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 2rem;
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.left-panel, .center-panel, .right-panel {
+  flex: 1;
+  padding: 1rem;
+}
+
+/* Left Panel: Clock, Date, Calendar, and Weekly Planner */
+.left-panel {
+  text-align: center;
+}
+
+.clock {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.date {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+}
+
+.calendar {
+  margin-top: 1rem;
+}
+
+.calendar table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.calendar th, .calendar td {
+  padding: 0.5rem;
+  text-align: center;
+}
+
+.calendar td {
+  cursor: pointer;
+}
+
+.calendar td.today {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+}
+
+.weekly-planner {
+  margin-top: 2rem;
+}
+
+.weekly-planner h2 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.week-info {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  font-size: 1rem;
+}
+
+#week-range {
+  font-weight: bold;
+}
+
+#days-remaining {
+  color: #4CAF50;
+}
+
+.task-input-week {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.task-input-week input {
+  flex: 1;
+  padding: 0.5rem;
+  border: none;
+  border-radius: 5px;
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  font-size: 1rem;
+  transition: background 0.3s, box-shadow 0.3s;
+}
+
+.task-input-week input:focus {
+  background: rgba(255, 255, 255, 0.3);
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
+  outline: none;
+}
+
+.task-input-week button {
+  background: #4CAF50;
+  border: none;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background 0.3s;
+}
+
+.task-input-week button:hover {
+  background: #45a049;
+}
+
+.task-list-week {
+  max-height: 200px; /* Adjust height as needed */
+  overflow-y: auto;
+  border-radius: 5px;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 0.5rem;
+}
+
+#task-list-week {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+#task-list-week li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem;
+  background: rgba(255, 255, 255, 0.1);
+  margin-bottom: 0.5rem;
+  border-radius: 5px;
+  transition: opacity 0.5s, transform 0.5s;
+}
+
+#task-list-week li.fade-out {
+  opacity: 0;
+  transform: translateX(-100%);
+}
+
+#task-list-week li button {
+  background: none;
+  border: 2px solid #4CAF50;
+  color: #4CAF50;
+  padding: 0.25rem;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 0.9rem;
+  width: 25px;
+  height: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.3s, color 0.3s;
+}
+
+#task-list-week li button:hover {
+  background: #4CAF50;
+  color: white;
+}
+
+/* Center Panel: Pomodoro Timer */
+.center-panel {
+  text-align: center;
+}
+
+.timer {
+  font-size: 4rem;
+  margin: 1rem 0;
+}
+
+.controls button {
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  color: white;
+  padding: 0.5rem 1rem;
+  margin: 0.5rem;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background 0.3s;
+}
+
+.controls button:hover {
+  background: rgba(255, 255, 255, 0.4);
+}
+
+.settings {
+  margin-top: 1rem;
+}
+
+.settings label {
+  display: block;
+  margin: 0.5rem 0;
+  font-size: 1rem;
+}
+
+.settings input {
+  padding: 0.75rem;
+  border: none;
+  border-radius: 8px;
+  width: 100%;
+  max-width: 200px;
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  font-size: 1rem;
+  transition: background 0.3s, box-shadow 0.3s;
+}
+
+.settings input:focus {
+  background: rgba(255, 255, 255, 0.3);
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
+  outline: none;
+}
+
+.session-count {
+  margin-top: 1rem;
+  font-size: 1.2rem;
+}
+
+/* Right Panel: Task Bar */
+.right-panel {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  padding: 1rem;
+}
+
+.task-input {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.task-input input {
+  flex: 1;
+  padding: 0.75rem;
+  border: none;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  font-size: 1rem;
+  transition: background 0.3s, box-shadow 0.3s;
+}
+
+.task-input input:focus {
+  background: rgba(255, 255, 255, 0.3);
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
+  outline: none;
+}
+
+.task-input button {
+  background: #4CAF50;
+  border: none;
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background 0.3s;
+}
+
+.task-input button:hover {
+  background: #45a049;
+}
+
+.task-list {
+  max-height: 200px; /* Adjust height as needed */
+  overflow-y: auto;
+  border-radius: 5px;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 0.5rem;
+}
+
+#task-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+#task-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem;
+  background: rgba(255, 255, 255, 0.1);
+  margin-bottom: 0.5rem;
+  border-radius: 8px;
+  transition: opacity 0.5s, transform 0.5s;
+}
+
+#task-list li.fade-out {
+  opacity: 0;
+  transform: translateX(-100%);
+}
+
+#task-list li button {
+  background: none;
+  border: 2px solid #4CAF50;
+  color: #4CAF50;
+  padding: 0.5rem;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 1rem;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.3s, color 0.3s;
+}
+
+#task-list li button:hover {
+  background: #4CAF50;
+  color: white;
+}
