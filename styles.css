@@ -1,179 +1,213 @@
 /* General Styles */
 body {
   margin: 0;
-  font-family: 'Arial', sans-serif;
-  background: linear-gradient(135deg, #6a11cb, #2575fc);
-  color: white;
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #2a2a72, #009ffd);
+  color: #ffffff;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  min-height: 100vh;
+  overflow-x: hidden;
 }
 
 .container {
   display: flex;
-  width: 90%;
-  max-width: 1200px;
-  background: rgba(255, 255, 255, 0.1);
+  width: 95%;
+  max-width: 1300px;
+  background: rgba(255, 255, 255, 0.05);
   padding: 2rem;
-  border-radius: 15px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  border-radius: 20px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(10px);
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
+/* Panel Styling */
 .left-panel, .center-panel, .right-panel {
   flex: 1;
-  padding: 1rem;
+  padding: 1.5rem;
+  border-radius: 15px;
+  background: rgba(255, 255, 255, 0.08);
+  transition: transform 0.3s ease;
+  min-width: 300px;
+  max-width: 100%;
 }
 
-/* Left Panel: Clock, Date, Calendar, and Weekly Planner */
+.left-panel:hover, .center-panel:hover, .right-panel:hover {
+  transform: translateY(-5px);
+}
+
+/* Left Panel: Clock, Date, Calendar, Weekly Planner */
 .left-panel {
   text-align: center;
 }
 
 .clock {
-  font-size: 2rem;
-  margin-bottom: 1rem;
+  font-size: clamp(1.5rem, 5vw, 2.5rem);
+  font-weight: 600;
+  letter-spacing: 1px;
+  margin-bottom: 1.5rem;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .date {
-  font-size: 1.2rem;
-  margin-bottom: 1rem;
-}
-
-.calendar {
-  margin-top: 1rem;
+  font-size: clamp(1rem, 3vw, 1.3rem);
+  opacity: 0.9;
+  margin-bottom: 1.5rem;
 }
 
 .calendar table {
   width: 100%;
   border-collapse: collapse;
+  font-size: clamp(0.9rem, 2.5vw, 1.1rem);
 }
 
 .calendar th, .calendar td {
-  padding: 0.5rem;
+  padding: 0.75rem;
   text-align: center;
+  color: #e0e0e0;
 }
 
 .calendar td {
   cursor: pointer;
+  transition: background 0.2s;
 }
 
-.calendar td.today {
-  background: rgba(255, 255, 255, 0.2);
+.calendar td:hover {
+  background: rgba(255, 255, 255, 0.15);
   border-radius: 50%;
 }
 
-.weekly-planner {
-  margin-top: 2rem;
+.calendar td.today {
+  background: #00c4cc;
+  color: #fff;
+  border-radius: 50%;
 }
 
 .weekly-planner h2 {
-  font-size: 1.5rem;
-  margin-bottom: 1rem;
+  font-size: clamp(1.2rem, 4vw, 1.6rem);
+  font-weight: 500;
+  margin-bottom: 1.2rem;
+  color: #ffffff;
 }
 
 .week-info {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 1rem;
-  font-size: 1rem;
+  font-size: clamp(0.9rem, 2.5vw, 1rem);
+  opacity: 0.85;
 }
 
 #week-range {
-  font-weight: bold;
+  font-weight: 600;
 }
 
 #days-remaining {
-  color: #4CAF50;
+  color: #00c4cc;
 }
 
-.task-input-week {
-  display: flex;
-  gap: 0.5rem;
-  margin-bottom: 1rem;
+.task-input-week input, .task-input input {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  padding: 0.75rem;
+  color: #fff;
+  font-size: clamp(0.9rem, 2.5vw, 1rem);
+  transition: all 0.3s ease;
+  width: 100%;
+  box-sizing: border-box;
 }
 
-.task-input-week input {
-  flex: 1;
-  padding: 0.5rem;
-  border: none;
-  border-radius: 5px;
-  background: rgba(255, 255, 255, 0.2);
-  color: white;
-  font-size: 1rem;
-  transition: background 0.3s, box-shadow 0.3s;
-}
-
-.task-input-week input:focus {
-  background: rgba(255, 255, 255, 0.3);
-  box-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
+.task-input-week input:focus, .task-input input:focus {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: #00c4cc;
+  box-shadow: 0 0 12px rgba(0, 196, 204, 0.3);
   outline: none;
 }
 
-.task-input-week button {
-  background: #4CAF50;
+.task-input-week button, .task-input button {
+  background: linear-gradient(135deg, #00c4cc, #009ffd);
   border: none;
-  color: white;
-  padding: 0.5rem 1rem;
-  border-radius: 5px;
+  border-radius: 10px;
+  padding: 0.75rem 1.5rem;
+  font-weight: 500;
+  color: #fff;
   cursor: pointer;
-  font-size: 1rem;
-  transition: background 0.3s;
+  transition: all 0.3s ease;
+  font-size: clamp(0.9rem, 2.5vw, 1rem);
 }
 
-.task-input-week button:hover {
-  background: #45a049;
+.task-input-week button:hover, .task-input button:hover {
+  background: linear-gradient(135deg, #00d4dd, #00b4ff);
+  box-shadow: 0 4px 15px rgba(0, 196, 204, 0.4);
 }
 
-.task-list-week {
-  max-height: 200px; /* Adjust height as needed */
+.task-input-week, .task-input {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.task-list-week, .task-list {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+  padding: 0.75rem;
+  max-height: 250px;
   overflow-y: auto;
-  border-radius: 5px;
+}
+
+#task-list-week li, #task-list li {
   background: rgba(255, 255, 255, 0.1);
-  padding: 0.5rem;
-}
-
-#task-list-week {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-#task-list-week li {
+  border-radius: 8px;
+  padding: 0.75rem;
+  margin-bottom: 0.75rem;
+  font-size: clamp(0.9rem, 2.5vw, 1rem);
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0.5rem;
-  background: rgba(255, 255, 255, 0.1);
-  margin-bottom: 0.5rem;
-  border-radius: 5px;
-  transition: opacity 0.5s, transform 0.5s;
+  transition: all 0.5s ease;
 }
 
-#task-list-week li.fade-out {
+#task-list-week li.fade-out, #task-list li.fade-out {
   opacity: 0;
   transform: translateX(-100%);
 }
 
-#task-list-week li button {
-  background: none;
-  border: 2px solid #4CAF50;
-  color: #4CAF50;
-  padding: 0.25rem;
-  border-radius: 50%;
+/* Custom Checkbox Styling */
+#task-list-week li button, #task-list li button {
+  position: relative;
+  width: 24px;
+  height: 24px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid #00c4cc;
+  border-radius: 6px; /* Slightly rounded square */
   cursor: pointer;
-  font-size: 0.9rem;
-  width: 25px;
-  height: 25px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background 0.3s, color 0.3s;
+  color: transparent; /* Hide the ✔️ emoji initially */
+  transition: all 0.3s ease;
+  overflow: hidden;
 }
 
-#task-list-week li button:hover {
-  background: #4CAF50;
-  color: white;
+#task-list-week li button:hover, #task-list li button:hover {
+  background: rgba(0, 196, 204, 0.2); /* Subtle teal fill on hover */
+}
+
+#task-list-week li button::before, #task-list li button::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: #00c4cc;
+  border-radius: 4px;
+  transform: translate(-50%, -50%);
+  transition: width 0.2s ease, height 0.2s ease;
+}
+
+#task-list-week li button.clicked::before, #task-list li button.clicked::before {
+  width: 80%;
+  height: 80%;
 }
 
 /* Center Panel: Pomodoro Timer */
@@ -181,152 +215,142 @@ body {
   text-align: center;
 }
 
+.center-panel h1 {
+  font-size: clamp(1.5rem, 5vw, 2rem);
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  color: #ffffff;
+}
+
 .timer {
-  font-size: 4rem;
-  margin: 1rem 0;
+  font-size: clamp(3rem, 10vw, 5rem);
+  font-weight: 700;
+  letter-spacing: 2px;
+  margin: 1.5rem 0;
+  text-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.controls {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 
 .controls button {
-  background: rgba(255, 255, 255, 0.2);
-  border: none;
-  color: white;
-  padding: 0.5rem 1rem;
-  margin: 0.5rem;
-  border-radius: 5px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  padding: 0.75rem 1.5rem;
+  font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+  color: #fff;
   cursor: pointer;
-  font-size: 1rem;
-  transition: background 0.3s;
+  transition: all 0.3s ease;
 }
 
 .controls button:hover {
-  background: rgba(255, 255, 255, 0.4);
-}
-
-.settings {
-  margin-top: 1rem;
+  background: #00c4cc;
+  border-color: #00c4cc;
+  box-shadow: 0 4px 15px rgba(0, 196, 204, 0.3);
 }
 
 .settings label {
+  font-size: clamp(0.9rem, 2.5vw, 1rem);
+  opacity: 0.9;
+  margin: 0.75rem 0;
   display: block;
-  margin: 0.5rem 0;
-  font-size: 1rem;
 }
 
 .settings input {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
   padding: 0.75rem;
-  border: none;
-  border-radius: 8px;
   width: 100%;
   max-width: 200px;
-  background: rgba(255, 255, 255, 0.2);
-  color: white;
-  font-size: 1rem;
-  transition: background 0.3s, box-shadow 0.3s;
+  color: #fff;
+  font-size: clamp(0.9rem, 2.5vw, 1rem);
+  transition: all 0.3s ease;
+  box-sizing: border-box;
 }
 
 .settings input:focus {
-  background: rgba(255, 255, 255, 0.3);
-  box-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.15);
+  border-color: #00c4cc;
+  box-shadow: 0 0 12px rgba(0, 196, 204, 0.3);
   outline: none;
 }
 
 .session-count {
-  margin-top: 1rem;
-  font-size: 1.2rem;
+  font-size: clamp(1rem, 3vw, 1.2rem);
+  margin-top: 1.5rem;
+  color: #00c4cc;
 }
 
 /* Right Panel: Task Bar */
-.right-panel {
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 10px;
-  padding: 1rem;
+.right-panel h2 {
+  font-size: clamp(1.2rem, 4vw, 1.6rem);
+  font-weight: 500;
+  margin-bottom: 1.2rem;
 }
 
-.task-input {
-  display: flex;
-  gap: 0.5rem;
-  margin-bottom: 1rem;
+/* Animation for Timer Pulse */
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
 }
 
-.task-input input {
-  flex: 1;
-  padding: 0.75rem;
-  border: none;
-  border-radius: 8px;
-  background: rgba(255, 255, 255, 0.2);
-  color: white;
-  font-size: 1rem;
-  transition: background 0.3s, box-shadow 0.3s;
+/* Media Queries for Responsiveness */
+@media (max-width: 900px) {
+  .container {
+    padding: 1.5rem;
+    gap: 1rem;
+  }
+
+  .left-panel, .center-panel, .right-panel {
+    flex: 1 1 100%;
+    min-width: 100%;
+  }
+
+  .clock {
+    font-size: clamp(1.2rem, 4vw, 2rem);
+  }
+
+  .timer {
+    font-size: clamp(2.5rem, 8vw, 4rem);
+  }
+
+  .task-input-week, .task-input {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .task-input-week button, .task-input button {
+    width: 100%;
+    padding: 0.75rem;
+  }
 }
 
-.task-input input:focus {
-  background: rgba(255, 255, 255, 0.3);
-  box-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
-  outline: none;
-}
+@media (max-width: 600px) {
+  .container {
+    padding: 1rem;
+  }
 
-.task-input button {
-  background: #4CAF50;
-  border: none;
-  color: white;
-  padding: 0.75rem 1.5rem;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 1rem;
-  transition: background 0.3s;
-}
+  .left-panel, .center-panel, .right-panel {
+    padding: 1rem;
+  }
 
-.task-input button:hover {
-  background: #45a049;
-}
+  .calendar th, .calendar td {
+    padding: 0.5rem;
+  }
 
-.task-list {
-  max-height: 200px; /* Adjust height as needed */
-  overflow-y: auto;
-  border-radius: 5px;
-  background: rgba(255, 255, 255, 0.1);
-  padding: 0.5rem;
-}
+  .controls button {
+    padding: 0.5rem 1rem;
+    font-size: clamp(0.8rem, 2vw, 1rem);
+  }
 
-#task-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-#task-list li {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0.75rem;
-  background: rgba(255, 255, 255, 0.1);
-  margin-bottom: 0.5rem;
-  border-radius: 8px;
-  transition: opacity 0.5s, transform 0.5s;
-}
-
-#task-list li.fade-out {
-  opacity: 0;
-  transform: translateX(-100%);
-}
-
-#task-list li button {
-  background: none;
-  border: 2px solid #4CAF50;
-  color: #4CAF50;
-  padding: 0.5rem;
-  border-radius: 50%;
-  cursor: pointer;
-  font-size: 1rem;
-  width: 30px;
-  height: 30px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background 0.3s, color 0.3s;
-}
-
-#task-list li button:hover {
-  background: #4CAF50;
-  color: white;
+  .settings input {
+    max-width: 150px;
+  }
 }
