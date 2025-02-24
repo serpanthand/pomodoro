@@ -31,13 +31,15 @@ body {
   padding: 1.5rem;
   border-radius: 15px;
   background: rgba(255, 255, 255, 0.08);
-  transition: transform 0.3s ease;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
   min-width: 300px;
   max-width: 100%;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
 .left-panel:hover, .center-panel:hover, .right-panel:hover {
   transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
 }
 
 /* Left Panel: Clock, Date, Calendar, Weekly Planner */
@@ -50,12 +52,17 @@ body {
   font-weight: 600;
   letter-spacing: 1px;
   margin-bottom: 1.5rem;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
 }
 
 .date {
   font-size: clamp(1rem, 3vw, 1.3rem);
-  opacity: 0.9;
+  opacity: 0.85;
+  margin-bottom: 1.5rem;
+}
+
+.calendar {
+  width: 100%;
   margin-bottom: 1.5rem;
 }
 
@@ -63,28 +70,35 @@ body {
   width: 100%;
   border-collapse: collapse;
   font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+  table-layout: fixed;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
 .calendar th, .calendar td {
   padding: 0.75rem;
   text-align: center;
   color: #e0e0e0;
+  transition: background 0.2s ease;
+  border: none; /* Removed grid lines for seamless look */
+}
+
+.calendar th:hover, .calendar td:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
 }
 
 .calendar td {
   cursor: pointer;
-  transition: background 0.2s;
-}
-
-.calendar td:hover {
-  background: rgba(255, 255, 255, 0.15);
-  border-radius: 50%;
+  width: 14.28%; /* 100% / 7 for even distribution */
 }
 
 .calendar td.today {
-  background: #00c4cc;
+  background: linear-gradient(135deg, #00c4cc, #009ffd);
   color: #fff;
   border-radius: 50%;
+  box-shadow: 0 2px 8px rgba(0, 196, 204, 0.3);
 }
 
 .weekly-planner h2 {
@@ -92,19 +106,30 @@ body {
   font-weight: 500;
   margin-bottom: 1.2rem;
   color: #ffffff;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
 }
 
 .week-info {
   font-size: clamp(0.9rem, 2.5vw, 1rem);
-  opacity: 0.85;
+  opacity: 1; /* Ensure full opacity for visibility */
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  padding: 0.5rem;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
 }
 
 #week-range {
   font-weight: 600;
+  color: #e0e0e0; /* Ensure good contrast */
 }
 
 #days-remaining {
-  color: #00c4cc;
+  color: #00c4cc; /* Solid color for better visibility instead of gradient */
+  font-weight: 600; /* Bold for emphasis */
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2); /* Stronger shadow for contrast */
 }
 
 .task-input-week input, .task-input input {
@@ -117,12 +142,13 @@ body {
   transition: all 0.3s ease;
   width: 100%;
   box-sizing: border-box;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
 .task-input-week input:focus, .task-input input:focus {
   background: rgba(255, 255, 255, 0.15);
   border-color: #00c4cc;
-  box-shadow: 0 0 12px rgba(0, 196, 204, 0.3);
+  box-shadow: 0 0 12px rgba(0, 196, 204, 0.3), 0 2px 8px rgba(0, 0, 0, 0.1);
   outline: none;
 }
 
@@ -136,11 +162,13 @@ body {
   cursor: pointer;
   transition: all 0.3s ease;
   font-size: clamp(0.9rem, 2.5vw, 1rem);
+  box-shadow: 0 4px 12px rgba(0, 196, 204, 0.2);
 }
 
 .task-input-week button:hover, .task-input button:hover {
   background: linear-gradient(135deg, #00d4dd, #00b4ff);
-  box-shadow: 0 4px 15px rgba(0, 196, 204, 0.4);
+  box-shadow: 0 6px 18px rgba(0, 196, 204, 0.4);
+  transform: translateY(-2px);
 }
 
 .task-input-week, .task-input {
@@ -153,8 +181,35 @@ body {
   background: rgba(255, 255, 255, 0.05);
   border-radius: 10px;
   padding: 0.75rem;
-  max-height: 250px;
+  min-height: 100px;
+  max-height: calc(100vh - 300px);
   overflow-y: auto;
+  transition: all 0.3s ease;
+  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+/* Custom Scrollbar for Task Lists */
+.task-list-week::-webkit-scrollbar, .task-list::-webkit-scrollbar {
+  width: 8px;
+}
+
+.task-list-week::-webkit-scrollbar-track, .task-list::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+}
+
+.task-list-week::-webkit-scrollbar-thumb, .task-list::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #00c4cc, #009ffd);
+  border-radius: 10px;
+  transition: opacity 0.3s ease;
+}
+
+.task-list-week::-webkit-scrollbar-thumb:hover, .task-list::-webkit-scrollbar-thumb:hover {
+  opacity: 0.8;
+}
+
+.task-list-week::-webkit-scrollbar-button, .task-list::-webkit-scrollbar-button {
+  display: none;
 }
 
 #task-list-week li, #task-list li {
@@ -166,7 +221,8 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  transition: all 0.5s ease;
+  transition: opacity 0.5s ease, transform 0.5s ease; /* Ensure fade-out and transform animations work */
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
 }
 
 #task-list-week li.fade-out, #task-list li.fade-out {
@@ -174,25 +230,25 @@ body {
   transform: translateX(-100%);
 }
 
-/* Custom Checkbox Styling */
-#task-list-week li button, #task-list li button {
+#task-list-week li .task-button, #task-list li .task-button {
   position: relative;
   width: 24px;
   height: 24px;
   background: rgba(255, 255, 255, 0.1);
   border: 2px solid #00c4cc;
-  border-radius: 6px; /* Slightly rounded square */
+  border-radius: 6px;
   cursor: pointer;
-  color: transparent; /* Hide the ✔️ emoji initially */
+  color: transparent;
   transition: all 0.3s ease;
   overflow: hidden;
+  box-shadow: 0 2px 6px rgba(0, 196, 204, 0.1);
 }
 
-#task-list-week li button:hover, #task-list li button:hover {
-  background: rgba(0, 196, 204, 0.2); /* Subtle teal fill on hover */
+#task-list-week li .task-button:hover, #task-list li .task-button:hover {
+  background: rgba(0, 196, 204, 0.2);
 }
 
-#task-list-week li button::before, #task-list li button::before {
+#task-list-week li .task-button::before, #task-list li .task-button::before {
   content: '';
   position: absolute;
   top: 50%;
@@ -205,7 +261,7 @@ body {
   transition: width 0.2s ease, height 0.2s ease;
 }
 
-#task-list-week li button.clicked::before, #task-list li button.clicked::before {
+#task-list-week li .task-button.clicked::before, #task-list li .task-button.clicked::before {
   width: 80%;
   height: 80%;
 }
@@ -220,6 +276,7 @@ body {
   font-weight: 600;
   margin-bottom: 1.5rem;
   color: #ffffff;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
 .timer {
@@ -227,7 +284,24 @@ body {
   font-weight: 700;
   letter-spacing: 2px;
   margin: 1.5rem 0;
-  text-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  text-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.progress-bar {
+  width: 100%;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 2px;
+  margin-top: 0.5rem;
+  overflow: hidden;
+  box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.05);
+}
+
+#progress {
+  width: 0;
+  height: 100%;
+  background: linear-gradient(90deg, #00c4cc, #009ffd);
+  transition: width 1s linear;
 }
 
 .controls {
@@ -246,19 +320,22 @@ body {
   color: #fff;
   cursor: pointer;
   transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .controls button:hover {
   background: #00c4cc;
   border-color: #00c4cc;
-  box-shadow: 0 4px 15px rgba(0, 196, 204, 0.3);
+  box-shadow: 0 6px 18px rgba(0, 196, 204, 0.3);
+  transform: translateY(-2px);
 }
 
 .settings label {
   font-size: clamp(0.9rem, 2.5vw, 1rem);
-  opacity: 0.9;
+  opacity: 0.85;
   margin: 0.75rem 0;
   display: block;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 }
 
 .settings input {
@@ -272,13 +349,47 @@ body {
   font-size: clamp(0.9rem, 2.5vw, 1rem);
   transition: all 0.3s ease;
   box-sizing: border-box;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
 .settings input:focus {
   background: rgba(255, 255, 255, 0.15);
   border-color: #00c4cc;
-  box-shadow: 0 0 12px rgba(0, 196, 204, 0.3);
+  box-shadow: 0 0 12px rgba(0, 196, 204, 0.3), 0 2px 8px rgba(0, 0, 0, 0.1);
   outline: none;
+}
+
+#soundToggle {
+  appearance: none;
+  width: 40px;
+  height: 20px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  position: relative;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+#soundToggle::before {
+  content: '';
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  background: #fff;
+  border-radius: 50%;
+  top: 2px;
+  left: 2px;
+  transition: transform 0.3s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+#soundToggle:checked {
+  background: #00c4cc;
+}
+
+#soundToggle:checked::before {
+  transform: translateX(20px);
 }
 
 .session-count {
@@ -287,11 +398,502 @@ body {
   color: #00c4cc;
 }
 
+#streakCount {
+  color: #FFA500;
+  margin-left: 0.5rem;
+  text-shadow: 0 1px 3px rgba(255, 165, 0, 0.2);
+}
+
+.session-history {
+  margin-top: 1rem;
+}
+
+#historyToggle {
+  background: none;
+  border: none;
+  color: #00c4cc;
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+#historyToggle:hover {
+  transform: scale(1.1);
+  color: #00d4dd;
+}
+
+#historyList {
+  list-style: none;
+  padding: 0;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease, padding 0.3s ease;
+  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+#historyList.active {
+  max-height: 150px;
+  padding: 0.5rem;
+}
+
+#historyList li {
+  font-size: 0.9rem;
+  padding: 0.3rem 0;
+  opacity: 0.9;
+  transition: opacity 0.3s ease;
+}
+
 /* Right Panel: Task Bar */
 .right-panel h2 {
   font-size: clamp(1.2rem, 4vw, 1.6rem);
   font-weight: 500;
   margin-bottom: 1.2rem;
+}
+
+.task-input {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.task-input input {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  padding: 0.75rem;
+  color: #fff;
+  font-size: clamp(0.9rem, 2.5vw, 1rem);
+  transition: all 0.3s ease;
+  width: 100%;
+  box-sizing: border-box;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.task-input input:focus {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: #00c4cc;
+  box-shadow: 0 0 12px rgba(0, 196, 204, 0.3), 0 2px 8px rgba(0, 0, 0, 0.1);
+  outline: none;
+}
+
+.task-input button {
+  background: linear-gradient(135deg, #00c4cc, #009ffd);
+  border: none;
+  border-radius: 10px;
+  padding: 0.75rem 1.5rem;
+  font-weight: 500;
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: clamp(0.9rem, 2.5vw, 1rem);
+  box-shadow: 0 4px 12px rgba(0, 196, 204, 0.2);
+}
+
+.task-input button:hover {
+  background: linear-gradient(135deg, #00d4dd, #00b4ff);
+  box-shadow: 0 6px 18px rgba(0, 196, 204, 0.4);
+  transform: translateY(-2px);
+}
+
+.task-list {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+  padding: 0.75rem;
+  min-height: 100px;
+  max-height: calc(100vh - 300px);
+  overflow-y: auto;
+  transition: all 0.3s ease;
+  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+/* Custom Scrollbar for Task Lists */
+.task-list::-webkit-scrollbar {
+  width: 8px;
+}
+
+.task-list::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+}
+
+.task-list::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #00c4cc, #009ffd);
+  border-radius: 10px;
+  transition: opacity 0.3s ease;
+}
+
+.task-list::-webkit-scrollbar-thumb:hover {
+  opacity: 0.8;
+}
+
+.task-list::-webkit-scrollbar-button {
+  display: none;
+}
+
+#task-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* Center Panel: Pomodoro Timer */
+.center-panel {
+  text-align: center;
+}
+
+.center-panel h1 {
+  font-size: clamp(1.5rem, 5vw, 2rem);
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  color: #ffffff;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.timer {
+  font-size: clamp(3rem, 10vw, 5rem);
+  font-weight: 700;
+  letter-spacing: 2px;
+  margin: 1.5rem 0;
+  text-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.progress-bar {
+  width: 100%;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 2px;
+  margin-top: 0.5rem;
+  overflow: hidden;
+  box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.05);
+}
+
+#progress {
+  width: 0;
+  height: 100%;
+  background: linear-gradient(90deg, #00c4cc, #009ffd);
+  transition: width 1s linear;
+}
+
+.controls {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.controls button {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  padding: 0.75rem 1.5rem;
+  font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.controls button:hover {
+  background: #00c4cc;
+  border-color: #00c4cc;
+  box-shadow: 0 6px 18px rgba(0, 196, 204, 0.3);
+  transform: translateY(-2px);
+}
+
+.settings label {
+  font-size: clamp(0.9rem, 2.5vw, 1rem);
+  opacity: 0.85;
+  margin: 0.75rem 0;
+  display: block;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.settings input {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  padding: 0.75rem;
+  width: 100%;
+  max-width: 200px;
+  color: #fff;
+  font-size: clamp(0.9rem, 2.5vw, 1rem);
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.settings input:focus {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: #00c4cc;
+  box-shadow: 0 0 12px rgba(0, 196, 204, 0.3), 0 2px 8px rgba(0, 0, 0, 0.1);
+  outline: none;
+}
+
+#soundToggle {
+  appearance: none;
+  width: 40px;
+  height: 20px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  position: relative;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+#soundToggle::before {
+  content: '';
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  background: #fff;
+  border-radius: 50%;
+  top: 2px;
+  left: 2px;
+  transition: transform 0.3s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+#soundToggle:checked {
+  background: #00c4cc;
+}
+
+#soundToggle:checked::before {
+  transform: translateX(20px);
+}
+
+.session-count {
+  font-size: clamp(1rem, 3vw, 1.2rem);
+  margin-top: 1.5rem;
+  color: #00c4cc;
+}
+
+#streakCount {
+  color: #FFA500;
+  margin-left: 0.5rem;
+  text-shadow: 0 1px 3px rgba(255, 165, 0, 0.2);
+}
+
+.session-history {
+  margin-top: 1rem;
+}
+
+#historyToggle {
+  background: none;
+  border: none;
+  color: #00c4cc;
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+#historyToggle:hover {
+  transform: scale(1.1);
+  color: #00d4dd;
+}
+
+#historyList {
+  list-style: none;
+  padding: 0;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease, padding 0.3s ease;
+  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+#historyList.active {
+  max-height: 150px;
+  padding: 0.5rem;
+}
+
+#historyList li {
+  font-size: 0.9rem;
+  padding: 0.3rem 0;
+  opacity: 0.9;
+  transition: opacity 0.3s ease;
+}
+
+/* Task Scheduler Styles */
+.scheduler-toggle {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid #00c4cc;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  font-size: 1.2rem;
+  color: #00c4cc;
+  cursor: pointer;
+  transition: transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 196, 204, 0.2);
+  z-index: 1000; /* Ensure it stays on top */
+}
+
+.scheduler-toggle:hover {
+  transform: scale(1.1);
+  background: rgba(0, 196, 204, 0.2);
+  box-shadow: 0 6px 18px rgba(0, 196, 204, 0.4);
+}
+
+.task-scheduler {
+  position: fixed;
+  bottom: 70px;
+  right: 20px;
+  width: 300px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 15px;
+  padding: 1rem;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(10px);
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease, padding 0.3s ease, opacity 0.3s ease;
+  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.05);
+  opacity: 0;
+  visibility: hidden;
+  z-index: 1000; /* Ensure it stays on top */
+}
+
+.task-scheduler.active {
+  max-height: 400px;
+  opacity: 1;
+  visibility: visible;
+}
+
+.task-scheduler h3 {
+  font-size: 1.2rem;
+  font-weight: 500;
+  margin-bottom: 1rem;
+  color: #ffffff;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+}
+
+.scheduler-input {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+#schedulerTask, #schedulerStartTime, #schedulerEndTime {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  padding: 0.5rem;
+  color: #fff;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+#schedulerTask {
+  flex: 1;
+}
+
+#schedulerStartTime, #schedulerEndTime {
+  width: 90px;
+}
+
+#schedulerTask:focus, #schedulerStartTime:focus, #schedulerEndTime:focus {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: #00c4cc;
+  box-shadow: 0 0 12px rgba(0, 196, 204, 0.3), 0 2px 8px rgba(0, 0, 0, 0.1);
+  outline: none;
+}
+
+#addSchedulerTask {
+  background: linear-gradient(135deg, #00c4cc, #009ffd);
+  border: none;
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  color: #fff;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 196, 204, 0.2);
+}
+
+#addSchedulerTask:hover {
+  background: linear-gradient(135deg, #00d4dd, #00b4ff);
+  box-shadow: 0 6px 18px rgba(0, 196, 204, 0.4);
+  transform: translateY(-2px);
+}
+
+#schedulerList {
+  list-style: none;
+  padding: 0;
+  max-height: 250px;
+  overflow-y: auto;
+  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+/* Custom Scrollbar for Scheduler List */
+#schedulerList::-webkit-scrollbar {
+  width: 8px;
+}
+
+#schedulerList::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+}
+
+#schedulerList::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #00c4cc, #009ffd);
+  border-radius: 10px;
+  transition: opacity 0.3s ease;
+}
+
+#schedulerList::-webkit-scrollbar-thumb:hover {
+  opacity: 0.8;
+}
+
+#schedulerList::-webkit-scrollbar-button {
+  display: none;
+}
+
+#schedulerList li {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: opacity 0.5s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+#schedulerList li.fade-out {
+  opacity: 0;
+}
+
+#schedulerList li button {
+  background: none;
+  border: 2px solid #00c4cc;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  color: #00c4cc;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 6px rgba(0, 196, 204, 0.1);
+}
+
+#schedulerList li button:hover {
+  background: #00c4cc;
+  color: #fff;
 }
 
 /* Animation for Timer Pulse */
@@ -307,28 +909,27 @@ body {
     padding: 1.5rem;
     gap: 1rem;
   }
-
   .left-panel, .center-panel, .right-panel {
     flex: 1 1 100%;
     min-width: 100%;
   }
-
   .clock {
     font-size: clamp(1.2rem, 4vw, 2rem);
   }
-
   .timer {
     font-size: clamp(2.5rem, 8vw, 4rem);
   }
-
   .task-input-week, .task-input {
     flex-direction: column;
     gap: 0.75rem;
   }
-
   .task-input-week button, .task-input button {
     width: 100%;
     padding: 0.75rem;
+  }
+  .task-scheduler {
+    width: 90%;
+    right: 5%;
   }
 }
 
@@ -336,20 +937,16 @@ body {
   .container {
     padding: 1rem;
   }
-
   .left-panel, .center-panel, .right-panel {
     padding: 1rem;
   }
-
   .calendar th, .calendar td {
     padding: 0.5rem;
   }
-
   .controls button {
     padding: 0.5rem 1rem;
     font-size: clamp(0.8rem, 2vw, 1rem);
   }
-
   .settings input {
     max-width: 150px;
   }
