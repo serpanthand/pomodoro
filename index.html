@@ -31,7 +31,7 @@
         <h2>Weekly Planner</h2>
         <div class="week-info">
           <span id="week-range">October 23 - October 29</span>
-          <span id="days-remaining">3 days remaining</span>
+          <span id="days-remaining">3 days remaining</span> <!-- Debug: Ensure this is visible -->
         </div>
         <div class="task-input-week">
           <input type="text" id="task-week" placeholder="Add a weekly task">
@@ -48,6 +48,7 @@
       <h1>Pomodoro Timer</h1>
       <div class="timer">
         <span id="time">25:00</span>
+        <div class="progress-bar"><div id="progress"></div></div>
       </div>
       <div class="controls">
         <button id="start">Start</button>
@@ -63,9 +64,15 @@
         <input type="number" id="longBreak" value="15" min="1">
         <label for="sessions">Sessions before Long Break:</label>
         <input type="number" id="sessions" value="4" min="1">
+        <label for="soundToggle">Sound Notifications:</label>
+        <input type="checkbox" id="soundToggle">
       </div>
       <div class="session-count">
-        <p>Sessions Completed: <span id="sessionCount">0</span></p>
+        <p>Sessions: <span id="sessionCount">0</span> | Streak: <span id="streakCount">0</span> 🔥</p>
+      </div>
+      <div class="session-history">
+        <button id="historyToggle">📜</button>
+        <ul id="historyList" class="hidden"></ul>
       </div>
     </div>
 
@@ -79,6 +86,23 @@
       <div class="task-list">
         <ul id="task-list"></ul>
       </div>
+    </div>
+  </div>
+  <!-- Task Scheduler -->
+  <button id="schedulerToggle" class="scheduler-toggle">⏰</button>
+  <div id="taskScheduler" class="task-scheduler hidden">
+    <h3>Task Scheduler</h3>
+    <div class="scheduler-input">
+      <input type="text" id="schedulerTask" placeholder="Task">
+      <input type="time" id="schedulerStartTime" placeholder="Start Time">
+      <input type="time" id="schedulerEndTime" placeholder="End Time">
+      <button id="addSchedulerTask">Add</button>
+    </div>
+    <ul id="schedulerList"></ul>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
     </div>
   </div>
   <script src="script.js"></script>
