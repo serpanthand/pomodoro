@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Pomodoro Timer</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -20,20 +21,12 @@
         <table id="calendar">
           <thead>
             <tr>
-              <th>Sun</th>
-              <th>Mon</th>
-              <th>Tue</th>
-              <th>Wed</th>
-              <th>Thu</th>
-              <th>Fri</th>
-              <th>Sat</th>
+              <th>Sun</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th>
             </tr>
           </thead>
           <tbody id="calendar-body"></tbody>
         </table>
       </div>
-
-      <!-- Weekly Planner -->
       <div class="weekly-planner">
         <h2>Weekly Planner</h2>
         <div class="week-info">
@@ -41,7 +34,7 @@
           <span id="days-remaining">3 days remaining</span>
         </div>
         <div class="task-input-week">
-          <input type="text" id="task-week" placeholder="Add a task for the week">
+          <input type="text" id="task-week" placeholder="Add a weekly task">
           <button id="addTaskWeek">Add</button>
         </div>
         <div class="task-list-week">
@@ -62,14 +55,14 @@
         <button id="reset">Reset</button>
       </div>
       <div class="settings">
-        <label for="work">Work (minutes):</label>
-        <input type="number" id="work" value="25">
-        <label for="shortBreak">Short Break (minutes):</label>
-        <input type="number" id="shortBreak" value="5">
-        <label for="longBreak">Long Break (minutes):</label>
-        <input type="number" id="longBreak" value="15">
+        <label for="work">Work (min):</label>
+        <input type="number" id="work" value="25" min="1">
+        <label for="shortBreak">Short Break (min):</label>
+        <input type="number" id="shortBreak" value="5" min="1">
+        <label for="longBreak">Long Break (min):</label>
+        <input type="number" id="longBreak" value="15" min="1">
         <label for="sessions">Sessions before Long Break:</label>
-        <input type="number" id="sessions" value="4">
+        <input type="number" id="sessions" value="4" min="1">
       </div>
       <div class="session-count">
         <p>Sessions Completed: <span id="sessionCount">0</span></p>
@@ -78,9 +71,9 @@
 
     <!-- Right Side: Task Bar -->
     <div class="right-panel">
-      <h2>Tasks</h2>
+      <h2>Daily Tasks</h2>
       <div class="task-input">
-        <input type="text" id="task" placeholder="Add a new task">
+        <input type="text" id="task" placeholder="Add a daily task">
         <button id="addTask">Add</button>
       </div>
       <div class="task-list">
