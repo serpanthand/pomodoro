@@ -360,6 +360,39 @@ body {
   outline: none;
 }
 
+#soundToggle {
+  appearance: none;
+  width: 40px;
+  height: 20px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  position: relative;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+#soundToggle::before {
+  content: '';
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  background: #fff;
+  border-radius: 50%;
+  top: 2px;
+  left: 2px;
+  transition: transform 0.3s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+#soundToggle:checked {
+  background: #00c4cc;
+}
+
+#soundToggle:checked::before {
+  transform: translateX(20px);
+}
+
 .session-count {
   font-size: clamp(1rem, 3vw, 1.2rem);
   margin-top: 1.5rem;
@@ -539,19 +572,17 @@ body {
   backdrop-filter: blur(10px);
   max-height: 0;
   overflow: hidden;
-  transition: max-height 0.3s ease, opacity 0.3s ease;
+  transition: max-height 0.3s ease, opacity 0.3s ease, visibility 0s linear 0.3s;
   opacity: 0;
+  visibility: hidden;
   z-index: 1000;
 }
 
 .task-scheduler:not(.hidden) {
   max-height: 400px;
   opacity: 1;
-}
-
-.task-scheduler.hidden {
-  max-height: 0;
-  opacity: 0;
+  visibility: visible;
+  transition: max-height 0.3s ease, opacity 0.3s ease;
 }
 
 .task-scheduler h3 {
