@@ -1,7 +1,7 @@
 // Ensure DOM is fully loaded before running script
 document.addEventListener('DOMContentLoaded', () => {
   // Pomodoro Timer Logic
-  let workTime = 60 * 60; // 60 minutes as per previous context
+  let workTime = 25 * 60;
   let shortBreak = 5 * 60;
   let longBreak = 15 * 60;
   let sessionsBeforeLongBreak = 4;
@@ -16,8 +16,10 @@ document.addEventListener('DOMContentLoaded', () => {
   const resetButton = document.getElementById('reset');
   const sessionCountDisplay = document.getElementById('sessionCount');
   const streakCountDisplay = document.getElementById('streakCount');
+  const soundToggle = document.getElementById('soundToggle');
   const historyToggle = document.getElementById('historyToggle');
   const historyList = document.getElementById('historyList');
+  const endSound = new Audio('/audio/beep.mp3'); // Local path for GitHub Pages
 
   // Initialize session history and streak from localStorage with error handling
   let sessionHistory = [];
@@ -46,9 +48,9 @@ document.addEventListener('DOMContentLoaded', () => {
       const savedLongBreak = localStorage.getItem('longBreak');
       const savedSessions = localStorage.getItem('sessionsBeforeLongBreak');
 
-      workTime = savedWorkTime ? parseInt(savedWorkTime) * 60 : workTime;
-      shortBreak = savedShortBreak ? parseInt(savedShortBreak) * 60 : shortBreak;
-      longBreak = savedLongBreak ? parseInt(savedLongBreak) * 60 : longBreak;
+      workTime = savedWorkTime ? parseInt(savedWorkTime) : workTime;
+      shortBreak = savedShortBreak ? parseInt(savedShortBreak) : shortBreak;
+      longBreak = savedLongBreak ? parseInt(savedLongBreak) : longBreak;
       sessionsBeforeLongBreak = savedSessions ? parseInt(savedSessions) : sessionsBeforeLongBreak;
 
       document.getElementById('work').value = workTime / 60;
@@ -57,6 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
       document.getElementById('sessions').value = sessionsBeforeLongBreak;
       updateDisplay(workTime);
 
+      soundToggle.checked = localStorage.getItem('soundEnabled') === 'true';
       console.log('Pomodoro settings loaded:', { workTime, shortBreak, longBreak, sessionsBeforeLongBreak });
     } catch (e) {
       console.error('Error loading Pomodoro settings:', e);
@@ -65,9 +68,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function savePomodoroSettings() {
     try {
-      localStorage.setItem('workTime', workTime / 60);
-      localStorage.setItem('shortBreak', shortBreak / 60);
-      localStorage.setItem('longBreak', longBreak / 60);
+      localStorage.setItem('workTime', workTime);
+      localStorage.setItem('shortBreak', shortBreak);
+      localStorage.setItem('longBreak', longBreak);
       localStorage.setItem('sessionsBeforeLongBreak', sessionsBeforeLongBreak);
       console.log('Pomodoro settings saved:', { workTime, shortBreak, longBreak, sessionsBeforeLongBreak });
     } catch (e) {
@@ -86,6 +89,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (time === 0 && isRunning) {
       timeDisplay.style.animation = 'pulse 0.5s ease 2';
       setTimeout(() => timeDisplay.style.animation = '', 1000);
+      if (soundToggle.checked) endSound.play();
       console.log('Timer completed:', isWorkTime ? 'Work' : 'Break');
     }
   }
@@ -232,6 +236,11 @@ document.addEventListener('DOMContentLoaded', () => {
     sessionsInput.value = sessionsBeforeLongBreak;
     savePomodoroSettings();
     console.log('Sessions before long break updated:', sessionsBeforeLongBreak);
+  });
+
+  soundToggle.addEventListener('change', () => {
+    localStorage.setItem('soundEnabled', soundToggle.checked);
+    console.log('Sound notifications toggled:', soundToggle.checked);
   });
 
   historyToggle.addEventListener('click', () => {
@@ -459,20 +468,8 @@ document.addEventListener('DOMContentLoaded', () => {
       try {
         event.preventDefault();
         event.stopPropagation();
-        const isHidden = taskScheduler.classList.toggle('hidden');
-        console.log('Scheduler toggle clicked, hidden:', isHidden);
-        // Force reflow to ensure transition triggers correctly
-        taskScheduler.offsetHeight; // Trigger reflow
-        // Ensure the panel resets correctly by forcing styles if needed
-        if (isHidden) {
-          taskScheduler.style.maxHeight = '0';
-          taskScheduler.style.opacity = '0';
-          taskScheduler.style.visibility = 'hidden';
-        } else {
-          taskScheduler.style.maxHeight = '400px';
-          taskScheduler.style.opacity = '1';
-          taskScheduler.style.visibility = 'visible';
-        }
+        taskScheduler.classList.toggle('hidden');
+        console.log('Scheduler toggle clicked, hidden:', taskScheduler.classList.contains('hidden'));
       } catch (e) {
         console.error('Error toggling scheduler:', e);
       }
