@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pomodoro Timer</title>
+  <title>Enhancing Pomodoro</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css?v=3">
 </head>
 <body>
   <div class="container">
@@ -15,7 +15,7 @@
         <span id="current-time">12:00:00 PM</span>
       </div>
       <div class="date">
-        <span id="current-date">January 1, 2023</span>
+        <span id="current-date">January 1, 2025</span>
       </div>
       <div class="calendar">
         <table id="calendar">
@@ -30,8 +30,8 @@
       <div class="weekly-planner">
         <h2>Weekly Planner</h2>
         <div class="week-info">
-          <span id="week-range">October 23 - October 29</span>
-          <span id="days-remaining">3 days remaining</span>
+          <span id="week-range">February 24 - March 2</span>
+          <span id="days-remaining">5 days remaining</span>
         </div>
         <div class="task-input-week">
           <input type="text" id="task-week" placeholder="Add a weekly task">
@@ -72,7 +72,7 @@
       </div>
       <div class="session-history">
         <button id="historyToggle">📜</button>
-        <ul id="historyList" class="hidden"></ul>
+        <ul id="historyList"></ul>
       </div>
     </div>
 
@@ -88,25 +88,18 @@
       </div>
     </div>
   </div>
-
   <!-- Task Scheduler -->
   <button id="schedulerToggle" class="scheduler-toggle">⏰</button>
-  <div id="taskScheduler" class="task-scheduler hidden">
+  <div id="taskScheduler" class="task-scheduler">
     <h3>Task Scheduler</h3>
     <div class="scheduler-input">
       <input type="text" id="schedulerTask" placeholder="Task">
-      <input type="time" id="schedulerStartTime" placeholder="Start Time">
-      <input type="time" id="schedulerEndTime" placeholder="End Time">
+      <input type="time" id="schedulerStartTime">
+      <input type="time" id="schedulerEndTime">
       <button id="addSchedulerTask">Add</button>
     </div>
     <ul id="schedulerList"></ul>
   </div>
-
-  <script src="script.js"></script>
-</body>
-</html>
-    </div>
-  </div>
-  <script src="script.js"></script>
+  <script src="script.js?v=3"></script>
 </body>
 </html>
