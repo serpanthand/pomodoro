@@ -1,7 +1,7 @@
 // Ensure DOM is fully loaded before running script
 document.addEventListener('DOMContentLoaded', () => {
   // Pomodoro Timer Logic
-  let workTime = 25 * 60;
+  let workTime = 60 * 60; // Updated to 60 minutes as per screenshot
   let shortBreak = 5 * 60;
   let longBreak = 15 * 60;
   let sessionsBeforeLongBreak = 4;
@@ -48,9 +48,9 @@ document.addEventListener('DOMContentLoaded', () => {
       const savedLongBreak = localStorage.getItem('longBreak');
       const savedSessions = localStorage.getItem('sessionsBeforeLongBreak');
 
-      workTime = savedWorkTime ? parseInt(savedWorkTime) : workTime;
-      shortBreak = savedShortBreak ? parseInt(savedShortBreak) : shortBreak;
-      longBreak = savedLongBreak ? parseInt(savedLongBreak) : longBreak;
+      workTime = savedWorkTime ? parseInt(savedWorkTime) * 60 : workTime;
+      shortBreak = savedShortBreak ? parseInt(savedShortBreak) * 60 : shortBreak;
+      longBreak = savedLongBreak ? parseInt(savedLongBreak) * 60 : longBreak;
       sessionsBeforeLongBreak = savedSessions ? parseInt(savedSessions) : sessionsBeforeLongBreak;
 
       document.getElementById('work').value = workTime / 60;
@@ -68,9 +68,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function savePomodoroSettings() {
     try {
-      localStorage.setItem('workTime', workTime);
-      localStorage.setItem('shortBreak', shortBreak);
-      localStorage.setItem('longBreak', longBreak);
+      localStorage.setItem('workTime', workTime / 60);
+      localStorage.setItem('shortBreak', shortBreak / 60);
+      localStorage.setItem('longBreak', longBreak / 60);
       localStorage.setItem('sessionsBeforeLongBreak', sessionsBeforeLongBreak);
       console.log('Pomodoro settings saved:', { workTime, shortBreak, longBreak, sessionsBeforeLongBreak });
     } catch (e) {
