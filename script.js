@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const soundToggle = document.getElementById('soundToggle');
   const historyToggle = document.getElementById('historyToggle');
   const historyList = document.getElementById('historyList');
-  const endSound = new Audio('https://www.soundjay.com/buttons/beep-01a.mp3');
+  const endSound = new Audio('/audio/beep.mp3'); // Local path for GitHub Pages
 
   // Initialize session history and streak from localStorage with error handling
   let sessionHistory = [];
@@ -456,102 +456,136 @@ document.addEventListener('DOMContentLoaded', () => {
   // Task Scheduler Logic
   const schedulerToggle = document.getElementById('schedulerToggle');
   const taskScheduler = document.getElementById('taskScheduler');
+  const schedulerTaskInput = document.getElementById('schedulerTask');
+  const schedulerStartTimeInput = document.getElementById('schedulerStartTime');
+  const schedulerEndTimeInput = document.getElementById('schedulerEndTime');
+  const addSchedulerTaskButton = document.getElementById('addSchedulerTask');
+  const schedulerList = document.getElementById('schedulerList');
 
+  // Ensure scheduler toggle works with error handling and GitHub Pages compatibility
   if (schedulerToggle && taskScheduler) {
-    schedulerToggle.addEventListener('click', () => {
-      taskScheduler.classList.toggle('active');
-      console.log('Scheduler toggle clicked, active:', taskScheduler.classList.contains('active'));
+    schedulerToggle.addEventListener('click', (event) => {
+      try {
+        event.preventDefault();
+        event.stopPropagation();
+        taskScheduler.classList.toggle('hidden');
+        console.log('Scheduler toggle clicked, hidden:', taskScheduler.classList.contains('hidden'));
+      } catch (e) {
+        console.error('Error toggling scheduler:', e);
+      }
     });
   } else {
     console.error('Scheduler toggle or task scheduler elements not found');
   }
 
-  // Add Task to Scheduler
-  const addSchedulerTaskButton = document.getElementById('addSchedulerTask');
-  const schedulerTaskInput = document.getElementById('schedulerTask');
-  const schedulerStartTimeInput = document.getElementById('schedulerStartTime');
-  const schedulerEndTimeInput = document.getElementById('schedulerEndTime');
-  const schedulerList = document.getElementById('schedulerList');
-
-  function addSchedulerTask() {
-    const taskText = schedulerTaskInput.value.trim();
-    const startTime = schedulerStartTimeInput.value;
-    const endTime = schedulerEndTimeInput.value;
-
-    if (taskText && startTime && endTime) {
-      const li = document.createElement('li');
-      li.innerHTML = `<span>${taskText} @ ${startTime} - ${endTime}</span><button onclick="removeSchedulerTask(this)">×</button>`;
-      schedulerList.appendChild(li);
-
-      schedulerTaskInput.value = '';
-      schedulerStartTimeInput.value = '';
-      schedulerEndTimeInput.value = '';
-
-      saveSchedulerTasks();
-      checkTaskTime(li, startTime, endTime);
-    }
-  }
-
-  function removeSchedulerTask(button) {
-    const li = button.parentElement;
-    if (li) {
-      li.style.opacity = '0';
-      setTimeout(() => {
-        li.remove();
-        saveSchedulerTasks();
-      }, 500);
-    } else {
-      console.error('Task list item not found for removal');
+  function loadSchedulerTasks() {
+    try {
+      const savedTasks = JSON.parse(localStorage.getItem('schedulerTasks')) || [];
+      schedulerList.innerHTML = '';
+      savedTasks.forEach(task => {
+        const li = document.createElement('li');
+        li.innerHTML = `<span>${task.text} @ ${task.startTime} - ${task.endTime}</span><button onclick="removeSchedulerTask(this)">×</button>`;
+        schedulerList.appendChild(li);
+        checkTaskTime(li, task.startTime, task.endTime);
+      });
+      checkAllTasks();
+      console.log('Scheduler tasks loaded:', savedTasks.length, 'tasks');
+    } catch (e) {
+      console.error('Error loading scheduler tasks:', e);
     }
   }
 
   function saveSchedulerTasks() {
-    const tasks = Array.from(schedulerList.children).map(li => ({
-      text: li.querySelector('span').textContent.split(' @ ')[0],
-      startTime: li.querySelector('span').textContent.split(' @ ')[1].split(' - ')[0],
-      endTime: li.querySelector('span').textContent.split(' - ')[1]
-    }));
-    localStorage.setItem('schedulerTasks', JSON.stringify(tasks));
-  }
-
-  function loadSchedulerTasks() {
-    const savedTasks = JSON.parse(localStorage.getItem('schedulerTasks')) || [];
-    schedulerList.innerHTML = '';
-    savedTasks.forEach(task => {
-      const li = document.createElement('li');
-      li.innerHTML = `<span>${task.text} @ ${task.startTime} - ${task.endTime}</span><button onclick="removeSchedulerTask(this)">×</button>`;
-      schedulerList.appendChild(li);
-      checkTaskTime(li, task.startTime, task.endTime);
-    });
-  }
-
-  function checkTaskTime(li, startTime, endTime) {
-    const now = new Date();
-    const [startHour, startMinute] = startTime.split(':').map(Number);
-    const [endHour, endMinute] = endTime.split(':').map(Number);
-    const startDate = new Date(now);
-    startDate.setHours(startHour, startMinute, 0, 0);
-    const endDate = new Date(now);
-    endDate.setHours(endHour, endMinute, 0, 0);
-
-    if (now > endDate) {
-      li.classList.add('fade-out');
-      setTimeout(() => {
-        li.remove();
-        saveSchedulerTasks();
-      }, 500);
-    } else {
-      setTimeout(() => checkTaskTime(li, startTime, endTime), 60000); // Check every minute
+    try {
+      const tasks = Array.from(schedulerList.children).map(li => ({
+        text: li.querySelector('span').textContent.split(' @ ')[0],
+        startTime: li.querySelector('span').textContent.split(' @ ')[1].split(' - ')[0],
+        endTime: li.querySelector('span').textContent.split(' - ')[1]
+      }));
+      localStorage.setItem('schedulerTasks', JSON.stringify(tasks));
+      console.log('Scheduler tasks saved:', tasks.length, 'tasks');
+    } catch (e) {
+      console.error('Error saving scheduler tasks:', e);
     }
   }
 
-  function addEventListeners() {
-    addSchedulerTaskButton.addEventListener('click', addSchedulerTask);
-    schedulerTaskInput.addEventListener('keypress', (e) => e.key === 'Enter' && addSchedulerTask());
-    schedulerStartTimeInput.addEventListener('keypress', (e) => e.key === 'Enter' && addSchedulerTask());
-    schedulerEndTimeInput.addEventListener('keypress', (e) => e.key === 'Enter' && addSchedulerTask());
+  function addSchedulerTask() {
+    try {
+      const taskText = schedulerTaskInput.value.trim();
+      const startTime = schedulerStartTimeInput.value;
+      const endTime = schedulerEndTimeInput.value;
+      if (taskText && startTime && endTime) {
+        const li = document.createElement('li');
+        li.innerHTML = `<span>${taskText} @ ${startTime} - ${endTime}</span><button onclick="removeSchedulerTask(this)">×</button>`;
+        schedulerList.appendChild(li);
+        schedulerTaskInput.value = '';
+        schedulerStartTimeInput.value = '';
+        schedulerEndTimeInput.value = '';
+        saveSchedulerTasks();
+        checkTaskTime(li, startTime, endTime);
+        console.log('New task added to scheduler:', taskText, startTime, endTime);
+      }
+    } catch (e) {
+      console.error('Error adding scheduler task:', e);
+    }
   }
 
-  addEventListeners();
+  window.removeSchedulerTask = function(button) {
+    try {
+      const li = button.parentElement;
+      li.style.opacity = '0';
+      setTimeout(() => {
+        li.remove();
+        saveSchedulerTasks();
+        console.log('Task removed from scheduler');
+      }, 500);
+    } catch (e) {
+      console.error('Error removing scheduler task:', e);
+    }
+  };
+
+  function checkTaskTime(li, startTime, endTime) {
+    try {
+      const now = new Date();
+      const [startHour, startMinute] = startTime.split(':').map(Number);
+      const [endHour, endMinute] = endTime.split(':').map(Number);
+      const startDate = new Date(now);
+      startDate.setHours(startHour, startMinute, 0, 0);
+      const endDate = new Date(now);
+      endDate.setHours(endHour, endMinute, 0, 0);
+
+      if (now > endDate) {
+        li.classList.add('fade-out');
+        setTimeout(() => {
+          li.remove();
+          saveSchedulerTasks();
+          console.log('Task faded out due to time expiration:', li.querySelector('span').textContent);
+        }, 500);
+      } else {
+        setTimeout(() => checkTaskTime(li, startTime, endTime), 60000); // Check every minute
+      }
+    } catch (e) {
+      console.error('Error checking task time:', e);
+    }
+  }
+
+  function checkAllTasks() {
+    try {
+      Array.from(schedulerList.children).forEach(li => {
+        const timeRange = li.querySelector('span').textContent.split(' @ ')[1];
+        const [startTime, endTime] = timeRange.split(' - ');
+        checkTaskTime(li, startTime, endTime);
+      });
+      console.log('Checked all scheduler tasks');
+    } catch (e) {
+      console.error('Error checking all scheduler tasks:', e);
+    }
+  }
+
+  addSchedulerTaskButton.addEventListener('click', addSchedulerTask);
+  schedulerTaskInput.addEventListener('keypress', (e) => e.key === 'Enter' && addSchedulerTask());
+  schedulerStartTimeInput.addEventListener('keypress', (e) => e.key === 'Enter' && addSchedulerTask());
+  schedulerEndTimeInput.addEventListener('keypress', (e) => e.key === 'Enter' && addSchedulerTask());
+
   loadSchedulerTasks();
 });
