@@ -549,7 +549,7 @@ body {
   font-size: 1.2rem;
   color: #00c4cc;
   cursor: pointer;
-  transition: transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+  transition: transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease; /* Fixed typo: 'sease' -> 'ease' */
   box-shadow: 0 4px 12px rgba(0, 196, 204, 0.2);
   z-index: 1000;
 }
