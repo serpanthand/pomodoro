@@ -1,7 +1,7 @@
 // Ensure DOM is fully loaded before running script
 document.addEventListener('DOMContentLoaded', () => {
   // Pomodoro Timer Logic
-  let workTime = 60 * 60; // 60 minutes as per screenshot
+  let workTime = 60 * 60; // 60 minutes as per previous context
   let shortBreak = 5 * 60;
   let longBreak = 15 * 60;
   let sessionsBeforeLongBreak = 4;
@@ -459,8 +459,10 @@ document.addEventListener('DOMContentLoaded', () => {
       try {
         event.preventDefault();
         event.stopPropagation();
-        taskScheduler.classList.toggle('hidden');
-        console.log('Scheduler toggle clicked, hidden:', taskScheduler.classList.contains('hidden'));
+        const isHidden = taskScheduler.classList.toggle('hidden');
+        console.log('Scheduler toggle clicked, hidden:', isHidden);
+        // Force reflow to ensure transition works after toggling class
+        taskScheduler.offsetHeight; // Trigger reflow
       } catch (e) {
         console.error('Error toggling scheduler:', e);
       }
