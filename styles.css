@@ -552,6 +552,12 @@ body {
   transition: max-height 0.3s ease, opacity 0.3s ease;
 }
 
+.task-scheduler.hidden {
+  max-height: 0;
+  opacity: 0;
+  visibility: hidden;
+}
+
 .task-scheduler h3 {
   font-size: 1.2rem;
   font-weight: 500;
