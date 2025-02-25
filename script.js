@@ -1,7 +1,7 @@
 // Ensure DOM is fully loaded before running script
 document.addEventListener('DOMContentLoaded', () => {
   // Pomodoro Timer Logic
-  let workTime = 60 * 60; // Updated to 60 minutes as per screenshot
+  let workTime = 60 * 60; // 60 minutes as per screenshot
   let shortBreak = 5 * 60;
   let longBreak = 15 * 60;
   let sessionsBeforeLongBreak = 4;
@@ -16,10 +16,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const resetButton = document.getElementById('reset');
   const sessionCountDisplay = document.getElementById('sessionCount');
   const streakCountDisplay = document.getElementById('streakCount');
-  const soundToggle = document.getElementById('soundToggle');
   const historyToggle = document.getElementById('historyToggle');
   const historyList = document.getElementById('historyList');
-  const endSound = new Audio('/audio/beep.mp3'); // Local path for GitHub Pages
 
   // Initialize session history and streak from localStorage with error handling
   let sessionHistory = [];
@@ -59,7 +57,6 @@ document.addEventListener('DOMContentLoaded', () => {
       document.getElementById('sessions').value = sessionsBeforeLongBreak;
       updateDisplay(workTime);
 
-      soundToggle.checked = localStorage.getItem('soundEnabled') === 'true';
       console.log('Pomodoro settings loaded:', { workTime, shortBreak, longBreak, sessionsBeforeLongBreak });
     } catch (e) {
       console.error('Error loading Pomodoro settings:', e);
@@ -89,7 +86,6 @@ document.addEventListener('DOMContentLoaded', () => {
     if (time === 0 && isRunning) {
       timeDisplay.style.animation = 'pulse 0.5s ease 2';
       setTimeout(() => timeDisplay.style.animation = '', 1000);
-      if (soundToggle.checked) endSound.play();
       console.log('Timer completed:', isWorkTime ? 'Work' : 'Break');
     }
   }
@@ -236,11 +232,6 @@ document.addEventListener('DOMContentLoaded', () => {
     sessionsInput.value = sessionsBeforeLongBreak;
     savePomodoroSettings();
     console.log('Sessions before long break updated:', sessionsBeforeLongBreak);
-  });
-
-  soundToggle.addEventListener('change', () => {
-    localStorage.setItem('soundEnabled', soundToggle.checked);
-    console.log('Sound notifications toggled:', soundToggle.checked);
   });
 
   historyToggle.addEventListener('click', () => {
