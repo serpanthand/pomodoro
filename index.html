@@ -5,17 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Enhancing Pomodoro</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=4">
+  <link rel="stylesheet" href="styles.css?v=3">
 </head>
 <body>
   <div class="container">
     <!-- Left Side: Clock, Date, Calendar, and Weekly Planner -->
     <div class="left-panel">
       <div class="clock">
-        <span id="current-time">11:37:47 AM</span>
+        <span id="current-time">12:00:00 PM</span>
       </div>
       <div class="date">
-        <span id="current-date">Tuesday, February 25, 2025</span>
+        <span id="current-date">January 1, 2025</span>
       </div>
       <div class="calendar">
         <table id="calendar">
@@ -47,7 +47,7 @@
     <div class="center-panel">
       <h1>Pomodoro Timer</h1>
       <div class="timer">
-        <span id="time">60:00</span>
+        <span id="time">25:00</span>
         <div class="progress-bar"><div id="progress"></div></div>
       </div>
       <div class="controls">
@@ -57,13 +57,15 @@
       </div>
       <div class="settings">
         <label for="work">Work (min):</label>
-        <input type="number" id="work" value="60" min="1">
+        <input type="number" id="work" value="25" min="1">
         <label for="shortBreak">Short Break (min):</label>
         <input type="number" id="shortBreak" value="5" min="1">
         <label for="longBreak">Long Break (min):</label>
         <input type="number" id="longBreak" value="15" min="1">
         <label for="sessions">Sessions before Long Break:</label>
         <input type="number" id="sessions" value="4" min="1">
+        <label for="soundToggle">Sound Notifications:</label>
+        <input type="checkbox" id="soundToggle">
       </div>
       <div class="session-count">
         <p>Sessions: <span id="sessionCount">0</span> | Streak: <span id="streakCount">0</span> 🔥</p>
@@ -98,11 +100,6 @@
     </div>
     <ul id="schedulerList"></ul>
   </div>
-  <script src="script.js?v=4"></script>
-</body>
-</html>
-    <ul id="schedulerList"></ul>
-  </div>
-  <script src="script.js?v=4"></script>
+  <script src="script.js?v=3"></script>
 </body>
 </html>
