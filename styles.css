@@ -539,23 +539,19 @@ body {
   backdrop-filter: blur(10px);
   max-height: 0;
   overflow: hidden;
-  transition: max-height 0.3s ease, opacity 0.3s ease, visibility 0s linear 0.3s;
+  transition: max-height 0.3s ease, opacity 0.3s ease;
   opacity: 0;
-  visibility: hidden;
   z-index: 1000;
 }
 
 .task-scheduler:not(.hidden) {
   max-height: 400px;
   opacity: 1;
-  visibility: visible;
-  transition: max-height 0.3s ease, opacity 0.3s ease;
 }
 
 .task-scheduler.hidden {
   max-height: 0;
   opacity: 0;
-  visibility: hidden;
 }
 
 .task-scheduler h3 {
