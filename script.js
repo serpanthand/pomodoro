@@ -461,8 +461,18 @@ document.addEventListener('DOMContentLoaded', () => {
         event.stopPropagation();
         const isHidden = taskScheduler.classList.toggle('hidden');
         console.log('Scheduler toggle clicked, hidden:', isHidden);
-        // Force reflow to ensure transition works after toggling class
+        // Force reflow to ensure transition triggers correctly
         taskScheduler.offsetHeight; // Trigger reflow
+        // Ensure the panel resets correctly by forcing styles if needed
+        if (isHidden) {
+          taskScheduler.style.maxHeight = '0';
+          taskScheduler.style.opacity = '0';
+          taskScheduler.style.visibility = 'hidden';
+        } else {
+          taskScheduler.style.maxHeight = '400px';
+          taskScheduler.style.opacity = '1';
+          taskScheduler.style.visibility = 'visible';
+        }
       } catch (e) {
         console.error('Error toggling scheduler:', e);
       }
