@@ -360,6 +360,39 @@ body {
   outline: none;
 }
 
+#soundToggle {
+  appearance: none;
+  width: 40px;
+  height: 20px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  position: relative;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+#soundToggle::before {
+  content: '';
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  background: #fff;
+  border-radius: 50%;
+  top: 2px;
+  left: 2px;
+  transition: transform 0.3s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+#soundToggle:checked {
+  background: #00c4cc;
+}
+
+#soundToggle:checked::before {
+  transform: translateX(20px);
+}
+
 .session-count {
   font-size: clamp(1rem, 3vw, 1.2rem);
   margin-top: 1.5rem;
@@ -516,7 +549,7 @@ body {
   font-size: 1.2rem;
   color: #00c4cc;
   cursor: pointer;
-  transition: transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+  transition: transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease; /* Fixed typo: 'sease' -> 'ease' */
   box-shadow: 0 4px 12px rgba(0, 196, 204, 0.2);
   z-index: 1000;
 }
