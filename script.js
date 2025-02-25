@@ -566,10 +566,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // Ensure scheduler toggle works with error handling
+  // Ensure scheduler toggle works with error handling and GitHub Pages compatibility
   if (schedulerToggle && taskScheduler) {
-    schedulerToggle.addEventListener('click', () => {
+    schedulerToggle.addEventListener('click', (event) => {
       try {
+        event.preventDefault(); // Prevent default behavior, if any
         taskScheduler.classList.toggle('active');
         console.log('Scheduler toggle clicked, active:', taskScheduler.classList.contains('active'));
       } catch (e) {
