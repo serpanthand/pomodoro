@@ -23,6 +23,7 @@ body {
   gap: 1.5rem;
   flex-wrap: wrap;
   justify-content: center;
+  position: relative;
 }
 
 /* Panel Styling */
@@ -81,7 +82,7 @@ body {
   text-align: center;
   color: #e0e0e0;
   transition: background 0.2s ease;
-  border: none; /* Removed grid lines for seamless look */
+  border: none;
 }
 
 .calendar th:hover, .calendar td:hover {
@@ -91,7 +92,7 @@ body {
 
 .calendar td {
   cursor: pointer;
-  width: 14.28%; /* 100% / 7 for even distribution */
+  width: 14.28%;
 }
 
 .calendar td.today {
@@ -111,7 +112,7 @@ body {
 
 .week-info {
   font-size: clamp(0.9rem, 2.5vw, 1rem);
-  opacity: 1; /* Ensure full opacity for visibility */
+  opacity: 1;
   display: flex;
   justify-content: space-between;
   margin-bottom: 1rem;
@@ -123,13 +124,13 @@ body {
 
 #week-range {
   font-weight: 600;
-  color: #e0e0e0; /* Ensure good contrast */
+  color: #e0e0e0;
 }
 
 #days-remaining {
-  color: #00c4cc; /* Solid color for better visibility instead of gradient */
-  font-weight: 600; /* Bold for emphasis */
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2); /* Stronger shadow for contrast */
+  color: #00c4cc;
+  font-weight: 600;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
 }
 
 .task-input-week input, .task-input input {
@@ -221,7 +222,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  transition: opacity 0.5s ease, transform 0.5s ease; /* Ensure fade-out and transform animations work */
+  transition: opacity 0.5s ease, transform 0.5s ease;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
 }
 
@@ -535,192 +536,6 @@ body {
   display: none;
 }
 
-#task-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-/* Center Panel: Pomodoro Timer */
-.center-panel {
-  text-align: center;
-}
-
-.center-panel h1 {
-  font-size: clamp(1.5rem, 5vw, 2rem);
-  font-weight: 600;
-  margin-bottom: 1.5rem;
-  color: #ffffff;
-  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-}
-
-.timer {
-  font-size: clamp(3rem, 10vw, 5rem);
-  font-weight: 700;
-  letter-spacing: 2px;
-  margin: 1.5rem 0;
-  text-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-}
-
-.progress-bar {
-  width: 100%;
-  height: 4px;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 2px;
-  margin-top: 0.5rem;
-  overflow: hidden;
-  box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.05);
-}
-
-#progress {
-  width: 0;
-  height: 100%;
-  background: linear-gradient(90deg, #00c4cc, #009ffd);
-  transition: width 1s linear;
-}
-
-.controls {
-  display: flex;
-  gap: 0.5rem;
-  justify-content: center;
-  flex-wrap: wrap;
-}
-
-.controls button {
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 10px;
-  padding: 0.75rem 1.5rem;
-  font-size: clamp(0.9rem, 2.5vw, 1.1rem);
-  color: #fff;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-}
-
-.controls button:hover {
-  background: #00c4cc;
-  border-color: #00c4cc;
-  box-shadow: 0 6px 18px rgba(0, 196, 204, 0.3);
-  transform: translateY(-2px);
-}
-
-.settings label {
-  font-size: clamp(0.9rem, 2.5vw, 1rem);
-  opacity: 0.85;
-  margin: 0.75rem 0;
-  display: block;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-}
-
-.settings input {
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 10px;
-  padding: 0.75rem;
-  width: 100%;
-  max-width: 200px;
-  color: #fff;
-  font-size: clamp(0.9rem, 2.5vw, 1rem);
-  transition: all 0.3s ease;
-  box-sizing: border-box;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-}
-
-.settings input:focus {
-  background: rgba(255, 255, 255, 0.15);
-  border-color: #00c4cc;
-  box-shadow: 0 0 12px rgba(0, 196, 204, 0.3), 0 2px 8px rgba(0, 0, 0, 0.1);
-  outline: none;
-}
-
-#soundToggle {
-  appearance: none;
-  width: 40px;
-  height: 20px;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 20px;
-  position: relative;
-  cursor: pointer;
-  transition: background 0.3s ease;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
-}
-
-#soundToggle::before {
-  content: '';
-  position: absolute;
-  width: 16px;
-  height: 16px;
-  background: #fff;
-  border-radius: 50%;
-  top: 2px;
-  left: 2px;
-  transition: transform 0.3s ease;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-}
-
-#soundToggle:checked {
-  background: #00c4cc;
-}
-
-#soundToggle:checked::before {
-  transform: translateX(20px);
-}
-
-.session-count {
-  font-size: clamp(1rem, 3vw, 1.2rem);
-  margin-top: 1.5rem;
-  color: #00c4cc;
-}
-
-#streakCount {
-  color: #FFA500;
-  margin-left: 0.5rem;
-  text-shadow: 0 1px 3px rgba(255, 165, 0, 0.2);
-}
-
-.session-history {
-  margin-top: 1rem;
-}
-
-#historyToggle {
-  background: none;
-  border: none;
-  color: #00c4cc;
-  font-size: 1.2rem;
-  cursor: pointer;
-  padding: 0.5rem;
-  transition: transform 0.3s ease, color 0.3s ease;
-}
-
-#historyToggle:hover {
-  transform: scale(1.1);
-  color: #00d4dd;
-}
-
-#historyList {
-  list-style: none;
-  padding: 0;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 8px;
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.3s ease, padding 0.3s ease;
-  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.05);
-}
-
-#historyList.active {
-  max-height: 150px;
-  padding: 0.5rem;
-}
-
-#historyList li {
-  font-size: 0.9rem;
-  padding: 0.3rem 0;
-  opacity: 0.9;
-  transition: opacity 0.3s ease;
-}
-
 /* Task Scheduler Styles */
 .scheduler-toggle {
   position: fixed;
@@ -736,7 +551,7 @@ body {
   cursor: pointer;
   transition: transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
   box-shadow: 0 4px 12px rgba(0, 196, 204, 0.2);
-  z-index: 1000; /* Ensure it stays on top */
+  z-index: 1000;
 }
 
 .scheduler-toggle:hover {
@@ -757,16 +572,17 @@ body {
   backdrop-filter: blur(10px);
   max-height: 0;
   overflow: hidden;
-  transition: max-height 0.3s ease, padding 0.3s ease, opacity 0.3s ease;
+  transition: max-height 0.3s ease, opacity 0.3s ease, visibility 0s linear 0.3s;
   opacity: 0;
   visibility: hidden;
-  z-index: 1000; /* Ensure it stays on top */
+  z-index: 1000;
 }
 
-.task-scheduler.active {
+.task-scheduler:not(.hidden) {
   max-height: 400px;
   opacity: 1;
   visibility: visible;
+  transition: max-height 0.3s ease, opacity 0.3s ease;
 }
 
 .task-scheduler h3 {
@@ -836,6 +652,30 @@ body {
   box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
+/* Custom Scrollbar for Scheduler List */
+#schedulerList::-webkit-scrollbar {
+  width: 8px;
+}
+
+#schedulerList::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+}
+
+#schedulerList::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #00c4cc, #009ffd);
+  border-radius: 10px;
+  transition: opacity 0.3s ease;
+}
+
+#schedulerList::-webkit-scrollbar-thumb:hover {
+  opacity: 0.8;
+}
+
+#schedulerList::-webkit-scrollbar-button {
+  display: none;
+}
+
 #schedulerList li {
   background: rgba(255, 255, 255, 0.1);
   border-radius: 8px;
@@ -870,6 +710,57 @@ body {
   background: #00c4cc;
   color: #fff;
 }
+
+/* Animation for Timer Pulse */
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 900px) {
+  .container {
+    padding: 1.5rem;
+    gap: 1rem;
+  }
+  .left-panel, .center-panel, .right-panel {
+    flex: 1 1 100%;
+    min-width: 100%;
+  }
+  .clock {
+    font-size: clamp(1.2rem, 4vw, 2rem);
+  }
+  .timer {
+    font-size: clamp(2.5rem, 8vw, 4rem);
+  }
+  .task-input-week, .task-input {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  .task-input-week button, .task-input button {
+    width: 100%;
+    padding: 0.75rem;
+  }
+  .task-scheduler {
+    width: 90%;
+    right: 5%;
+  }
+}
+
+@media (max-width: 600px) {
+  .container {
+    padding: 1rem;
+  }
+  .left-panel, .center-panel, .right-panel {
+    padding: 1rem;
+  }
+  .calendar th, .calendar td {
+    padding: 0.5rem;
+  }
+  .controls button {
+    padding: 0.5rem 1rem;
+    font-size: clamp(0.8rem, 2vw, 1rem);
   }
   .settings input {
     max-width: 150px;
