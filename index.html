@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Enhancing Pomodoro</title>
+  <title>Enhanced Pomodoro with Stats</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
@@ -12,10 +12,10 @@
     <!-- Left Side: Clock, Date, Calendar, and Weekly Planner -->
     <div class="left-panel">
       <div class="clock">
-        <span id="current-time">11:37:47 AM</span>
+        <span id="current-time"></span>
       </div>
       <div class="date">
-        <span id="current-date">Thursday, February 27, 2025</span>
+        <span id="current-date"></span>
       </div>
       <div class="calendar">
         <table id="calendar">
@@ -30,8 +30,8 @@
       <div class="weekly-planner">
         <h2>Weekly Planner</h2>
         <div class="week-info">
-          <span id="week-range">February 23 - March 1</span>
-          <span id="days-remaining">3 days remaining</span>
+          <span id="week-range"></span>
+          <span id="days-remaining"></span>
         </div>
         <div class="task-input-week">
           <input type="text" id="task-week" placeholder="Add a weekly task">
@@ -80,11 +80,13 @@
       <div class="task-list">
         <ul id="task-list"></ul>
       </div>
+      <button id="statsButton" class="stats-button">📊</button>
     </div>
   </div>
+
   <!-- Task Scheduler -->
   <button id="schedulerToggle" class="scheduler-toggle">⏰</button>
-  <div id="taskScheduler" class="task-scheduler">
+  <div id="taskScheduler" class="task-scheduler hidden">
     <h3>Task Scheduler</h3>
     <div class="scheduler-input">
       <input type="text" id="schedulerTask" placeholder="Task">
@@ -94,6 +96,23 @@
     </div>
     <ul id="schedulerList"></ul>
   </div>
+
+  <!-- Stats Dashboard -->
+  <div id="statsDashboard" class="stats-dashboard hidden">
+    <button id="closeStats" class="close-stats">×</button>
+    <h2>Charts Dashboard</h2>
+    <div class="chart-container">
+      <canvas id="barChart"></canvas>
+    </div>
+    <div class="chart-container">
+      <canvas id="lineChart"></canvas>
+    </div>
+    <div class="chart-container">
+      <canvas id="pieChart"></canvas>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
