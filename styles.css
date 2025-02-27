@@ -36,6 +36,7 @@ body {
   min-width: 300px;
   max-width: 100%;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  position: relative;
 }
 
 .left-panel:hover, .center-panel:hover, .right-panel:hover {
@@ -202,7 +203,6 @@ body {
 .task-list-week::-webkit-scrollbar-thumb, .task-list::-webkit-scrollbar-thumb {
   background: linear-gradient(135deg, #00c4cc, #009ffd);
   border-radius: 10px;
-  transition: opacity 0.3s ease;
 }
 
 .task-list-week::-webkit-scrollbar-thumb:hover, .task-list::-webkit-scrollbar-thumb:hover {
@@ -302,7 +302,7 @@ body {
   width: 0;
   height: 100%;
   background: linear-gradient(90deg, #00c4cc, #009ffd);
-  transition: width 1s linear;
+  transition: width 0.3s ease;
 }
 
 .controls {
@@ -379,93 +379,34 @@ body {
   margin-bottom: 1.2rem;
 }
 
-.task-input {
-  display: flex;
-  gap: 0.5rem;
-  margin-bottom: 1rem;
-  flex-wrap: wrap;
-}
-
-.task-input input {
-  flex: 1;
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 10px;
-  padding: 0.75rem;
-  color: #fff;
-  font-size: clamp(0.9rem, 2.5vw, 1rem);
-  transition: all 0.3s ease;
-  width: 100%;
-  box-sizing: border-box;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-}
-
-.task-input input:focus {
-  background: rgba(255, 255, 255, 0.15);
-  border-color: #00c4cc;
-  box-shadow: 0 0 12px rgba(0, 196, 204, 0.3), 0 2px 8px rgba(0, 0, 0, 0.1);
-  outline: none;
-}
-
-.task-input button {
+.stats-button {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
   background: linear-gradient(135deg, #00c4cc, #009ffd);
   border: none;
-  border-radius: 10px;
-  padding: 0.75rem 1.5rem;
-  font-weight: 500;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  font-size: 1.5rem;
   color: #fff;
   cursor: pointer;
   transition: all 0.3s ease;
-  font-size: clamp(0.9rem, 2.5vw, 1rem);
   box-shadow: 0 4px 12px rgba(0, 196, 204, 0.2);
+  z-index: 998;
 }
 
-.task-input button:hover {
+.stats-button:hover {
   background: linear-gradient(135deg, #00d4dd, #00b4ff);
+  transform: scale(1.1) rotate(10deg);
   box-shadow: 0 6px 18px rgba(0, 196, 204, 0.4);
-  transform: translateY(-2px);
-}
-
-.task-list {
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 10px;
-  padding: 0.75rem;
-  min-height: 100px;
-  max-height: calc(100vh - 300px);
-  overflow-y: auto;
-  transition: all 0.3s ease;
-  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.05);
-}
-
-/* Custom Scrollbar for Task Lists */
-.task-list::-webkit-scrollbar {
-  width: 8px;
-}
-
-.task-list::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 10px;
-}
-
-.task-list::-webkit-scrollbar-thumb {
-  background: linear-gradient(135deg, #00c4cc, #009ffd);
-  border-radius: 10px;
-  transition: opacity 0.3s ease;
-}
-
-.task-list::-webkit-scrollbar-thumb:hover {
-  opacity: 0.8;
-}
-
-.task-list::-webkit-scrollbar-button {
-  display: none;
 }
 
 /* Task Scheduler Styles */
 .scheduler-toggle {
   position: fixed;
   bottom: 20px;
-  right: 20px;
+  right: 80px;
   background: rgba(255, 255, 255, 0.1);
   border: 2px solid #00c4cc;
   border-radius: 50%;
@@ -476,7 +417,7 @@ body {
   cursor: pointer;
   transition: transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
   box-shadow: 0 4px 12px rgba(0, 196, 204, 0.2);
-  z-index: 1000;
+  z-index: 999;
 }
 
 .scheduler-toggle:hover {
@@ -488,7 +429,7 @@ body {
 .task-scheduler {
   position: fixed;
   bottom: 70px;
-  right: 20px;
+  right: 80px;
   width: 300px;
   background: rgba(255, 255, 255, 0.05);
   border-radius: 15px;
@@ -577,7 +518,6 @@ body {
   box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
-/* Custom Scrollbar for Scheduler List */
 #schedulerList::-webkit-scrollbar {
   width: 8px;
 }
@@ -590,15 +530,10 @@ body {
 #schedulerList::-webkit-scrollbar-thumb {
   background: linear-gradient(135deg, #00c4cc, #009ffd);
   border-radius: 10px;
-  transition: opacity 0.3s ease;
 }
 
 #schedulerList::-webkit-scrollbar-thumb:hover {
   opacity: 0.8;
-}
-
-#schedulerList::-webkit-scrollbar-button {
-  display: none;
 }
 
 #schedulerList li {
@@ -636,58 +571,121 @@ body {
   color: #fff;
 }
 
-/* Animation for Timer Pulse */
-@keyframes pulse {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.05); }
-  100% { transform: scale(1); }
+/* Stats Dashboard Styling */
+.stats-dashboard {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(42, 42, 114, 0.95);
+  padding: 2rem;
+  box-sizing: border-box;
+  z-index: 2000;
+  overflow-y: auto;
+  transition: opacity 0.3s ease, visibility 0s linear 0.3s;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  backdrop-filter: blur(10px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
-/* Media Queries for Responsiveness */
+.stats-dashboard:not(.hidden) {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0.3s ease;
+}
+
+.stats-dashboard h2 {
+  font-size: clamp(1.5rem, 5vw, 2rem);
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 2rem;
+  color: #ffffff;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.close-stats {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid #00c4cc;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  font-size: 1.2rem;
+  color: #00c4cc;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 196, 204, 0.2);
+}
+
+.close-stats:hover {
+  background: #00c4cc;
+  color: #fff;
+  transform: scale(1.1);
+}
+
+.chart-container {
+  width: 80%;
+  max-width: 800px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 15px;
+  padding: 20px;
+  margin: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.chart-container:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+.chart-container canvas {
+  max-width: 100%;
+  border-radius: 10px;
+}
+
+/* Bar Chart Styling */
+#barChart {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+  padding: 10px;
+}
+
+/* Line Chart Styling */
+#lineChart {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+  padding: 10px;
+}
+
+/* Pie Chart Styling */
+#pieChart {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+  padding: 10px;
+}
+
+/* Responsive Design for Stats Dashboard */
 @media (max-width: 900px) {
-  .container {
-    padding: 1.5rem;
-    gap: 1rem;
-  }
-  .left-panel, .center-panel, .right-panel {
-    flex: 1 1 100%;
-    min-width: 100%;
-  }
-  .clock {
-    font-size: clamp(1.2rem, 4vw, 2rem);
-  }
-  .timer {
-    font-size: clamp(2.5rem, 8vw, 4rem);
-  }
-  .task-input-week, .task-input {
-    flex-direction: column;
-    gap: 0.75rem;
-  }
-  .task-input-week button, .task-input button {
-    width: 100%;
-    padding: 0.75rem;
-  }
-  .task-scheduler {
+  .chart-container {
     width: 90%;
-    right: 5%;
+    padding: 15px;
   }
 }
 
 @media (max-width: 600px) {
-  .container {
-    padding: 1rem;
-  }
-  .left-panel, .center-panel, .right-panel {
-    padding: 1rem;
-  }
-  .calendar th, .calendar td {
-    padding: 0.5rem;
-  }
-  .controls button {
-    padding: 0.5rem 1rem;
-    font-size: clamp(0.8rem, 2vw, 1rem);
-  }
-  .settings input {
-    max-width: 150px;
+  .chart-container {
+    width: 100%;
+    padding: 10px;
   }
 }
