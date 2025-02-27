@@ -16,20 +16,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const resetButton = document.getElementById('reset');
   const sessionCountDisplay = document.getElementById('sessionCount');
   const streakCountDisplay = document.getElementById('streakCount');
-  const soundToggle = document.getElementById('soundToggle');
-  const historyToggle = document.getElementById('historyToggle');
-  const historyList = document.getElementById('historyList');
-  const endSound = new Audio('/audio/beep.mp3'); // Local path for GitHub Pages
 
-  // Initialize session history and streak from localStorage with error handling
-  let sessionHistory = [];
-  try {
-    sessionHistory = JSON.parse(localStorage.getItem('sessionHistory')) || [];
-  } catch (e) {
-    console.error('Error parsing sessionHistory from localStorage:', e);
-    sessionHistory = [];
-  }
-
+  // Initialize streak from localStorage with error handling
   let streak = 0;
   let lastSessionDate = null;
   try {
@@ -59,7 +47,6 @@ document.addEventListener('DOMContentLoaded', () => {
       document.getElementById('sessions').value = sessionsBeforeLongBreak;
       updateDisplay(workTime);
 
-      soundToggle.checked = localStorage.getItem('soundEnabled') === 'true';
       console.log('Pomodoro settings loaded:', { workTime, shortBreak, longBreak, sessionsBeforeLongBreak });
     } catch (e) {
       console.error('Error loading Pomodoro settings:', e);
@@ -89,7 +76,6 @@ document.addEventListener('DOMContentLoaded', () => {
     if (time === 0 && isRunning) {
       timeDisplay.style.animation = 'pulse 0.5s ease 2';
       setTimeout(() => timeDisplay.style.animation = '', 1000);
-      if (soundToggle.checked) endSound.play();
       console.log('Timer completed:', isWorkTime ? 'Work' : 'Break');
     }
   }
@@ -113,15 +99,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  function updateHistory() {
-    try {
-      historyList.innerHTML = sessionHistory.map(item => `<li>${item}</li>`).join('');
-      console.log('Session history updated:', sessionHistory);
-    } catch (e) {
-      console.error('Error updating session history:', e);
-    }
-  }
-
   function startTimer() {
     if (!isRunning) {
       isRunning = true;
@@ -136,9 +113,6 @@ document.addEventListener('DOMContentLoaded', () => {
             sessionCount++;
             sessionCountDisplay.textContent = sessionCount;
             updateStreak();
-            sessionHistory.push(`${new Date().toLocaleString()} - ${document.getElementById('work').value} min`);
-            localStorage.setItem('sessionHistory', JSON.stringify(sessionHistory.slice(-5)));
-            updateHistory();
             isWorkTime = false;
             shortBreak = parseInt(document.getElementById('shortBreak').value) * 60;
             longBreak = parseInt(document.getElementById('longBreak').value) * 60;
@@ -238,19 +212,8 @@ document.addEventListener('DOMContentLoaded', () => {
     console.log('Sessions before long break updated:', sessionsBeforeLongBreak);
   });
 
-  soundToggle.addEventListener('change', () => {
-    localStorage.setItem('soundEnabled', soundToggle.checked);
-    console.log('Sound notifications toggled:', soundToggle.checked);
-  });
-
-  historyToggle.addEventListener('click', () => {
-    historyList.classList.toggle('active');
-    console.log('History toggle clicked, active:', historyList.classList.contains('active'));
-  });
-
   loadPomodoroSettings();
   updateStreak();
-  updateHistory();
 
   // Clock and Calendar Logic
   function updateClock() {
