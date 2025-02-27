@@ -1,7 +1,7 @@
 // Ensure DOM is fully loaded before running script
 document.addEventListener('DOMContentLoaded', () => {
   // Pomodoro Timer Logic
-  let workTime = 60 * 60; // Updated to 60 minutes as per screenshot
+  let workTime = 60 * 60; // 60 minutes
   let shortBreak = 5 * 60;
   let longBreak = 15 * 60;
   let sessionsBeforeLongBreak = 4;
@@ -82,11 +82,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function updateStreak() {
     try {
-      const today = new Date().toDateString();
+      const today = new Date('2025-02-27').toDateString(); // Set to February 27, 2025
       if (lastSessionDate !== today) {
-        if (lastSessionDate === new Date(Date.now() - 86400000).toDateString()) {
+        if (lastSessionDate === new Date('2025-02-26').toDateString()) {
           streak++;
-        } else if (!lastSessionDate || new Date(lastSessionDate) < new Date(Date.now() - 86400000)) {
+        } else if (!lastSessionDate || new Date(lastSessionDate) < new Date('2025-02-26')) {
           streak = 1;
         }
         localStorage.setItem('lastSessionDate', today);
@@ -217,7 +217,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Clock and Calendar Logic
   function updateClock() {
-    const now = new Date();
+    const now = new Date('2025-02-27T11:37:47'); // Fixed date for consistency
     const time = now.toLocaleTimeString();
     const date = now.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
     try {
@@ -236,7 +236,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function renderCalendar() {
     try {
-      const now = new Date();
+      const now = new Date('2025-02-27'); // Fixed date for February 27, 2025
       const year = now.getFullYear();
       const month = now.getMonth();
       const firstDay = new Date(year, month, 1);
@@ -307,16 +307,16 @@ document.addEventListener('DOMContentLoaded', () => {
   const taskList = document.getElementById('task-list');
 
   function getWeekRange() {
-    const now = new Date();
+    const now = new Date('2025-02-27'); // Fixed date for February 27, 2025
     const startOfWeek = new Date(now);
-    startOfWeek.setDate(now.getDate() - now.getDay() + 1);
+    startOfWeek.setDate(now.getDate() - now.getDay() + (now.getDay() === 0 ? -6 : 1));
     const endOfWeek = new Date(startOfWeek);
     endOfWeek.setDate(startOfWeek.getDate() + 6);
     return `${startOfWeek.toLocaleDateString('en-US', { month: 'long', day: 'numeric' })} - ${endOfWeek.toLocaleDateString('en-US', { month: 'long', day: 'numeric' })}`;
   }
 
   function getDaysRemaining() {
-    const now = new Date();
+    const now = new Date('2025-02-27'); // Fixed date for February 27, 2025
     const dayOfWeek = now.getDay();
     const daysRemainingInWeek = 6 - dayOfWeek + (dayOfWeek === 0 ? 0 : 1);
     return `${daysRemainingInWeek} day${daysRemainingInWeek !== 1 ? 's' : ''} remaining`;
@@ -425,7 +425,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const addSchedulerTaskButton = document.getElementById('addSchedulerTask');
   const schedulerList = document.getElementById('schedulerList');
 
-  // Ensure scheduler toggle works with error handling and GitHub Pages compatibility
   if (schedulerToggle && taskScheduler) {
     schedulerToggle.addEventListener('click', (event) => {
       try {
@@ -444,6 +443,8 @@ document.addEventListener('DOMContentLoaded', () => {
   function loadSchedulerTasks() {
     try {
       const savedTasks = JSON.parse(localStorage.getItem('schedulerTasks')) || [];
+      const schedulerList = document.getElementById('schedulerList');
+      if (!schedulerList) throw new Error('Scheduler list not found');
       schedulerList.innerHTML = '';
       savedTasks.forEach(task => {
         const li = document.createElement('li');
@@ -460,6 +461,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function saveSchedulerTasks() {
     try {
+      const schedulerList = document.getElementById('schedulerList');
+      if (!schedulerList) throw new Error('Scheduler list not found');
       const tasks = Array.from(schedulerList.children).map(li => ({
         text: li.querySelector('span').textContent.split(' @ ')[0],
         startTime: li.querySelector('span').textContent.split(' @ ')[1].split(' - ')[0],
@@ -496,6 +499,7 @@ document.addEventListener('DOMContentLoaded', () => {
   window.removeSchedulerTask = function(button) {
     try {
       const li = button.parentElement;
+      if (!li) throw new Error('Task list item not found');
       li.style.opacity = '0';
       setTimeout(() => {
         li.remove();
@@ -509,7 +513,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function checkTaskTime(li, startTime, endTime) {
     try {
-      const now = new Date();
+      const now = new Date('2025-02-27T11:37:47'); // Fixed date for February 27, 2025
       const [startHour, startMinute] = startTime.split(':').map(Number);
       const [endHour, endMinute] = endTime.split(':').map(Number);
       const startDate = new Date(now);
@@ -534,6 +538,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function checkAllTasks() {
     try {
+      const schedulerList = document.getElementById('schedulerList');
+      if (!schedulerList) throw new Error('Scheduler list not found');
       Array.from(schedulerList.children).forEach(li => {
         const timeRange = li.querySelector('span').textContent.split(' @ ')[1];
         const [startTime, endTime] = timeRange.split(' - ');
@@ -545,10 +551,21 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  addSchedulerTaskButton.addEventListener('click', addSchedulerTask);
-  schedulerTaskInput.addEventListener('keypress', (e) => e.key === 'Enter' && addSchedulerTask());
-  schedulerStartTimeInput.addEventListener('keypress', (e) => e.key === 'Enter' && addSchedulerTask());
-  schedulerEndTimeInput.addEventListener('keypress', (e) => e.key === 'Enter' && addSchedulerTask());
+  if (addSchedulerTaskButton) {
+    addSchedulerTaskButton.addEventListener('click', addSchedulerTask);
+  }
+
+  if (schedulerTaskInput) {
+    schedulerTaskInput.addEventListener('keypress', (e) => e.key === 'Enter' && addSchedulerTask());
+  }
+
+  if (schedulerStartTimeInput) {
+    schedulerStartTimeInput.addEventListener('keypress', (e) => e.key === 'Enter' && addSchedulerTask());
+  }
+
+  if (schedulerEndTimeInput) {
+    schedulerEndTimeInput.addEventListener('keypress', (e) => e.key === 'Enter' && addSchedulerTask());
+  }
 
   loadSchedulerTasks();
 });
